@@ -58,8 +58,8 @@ const posts = [
     },
 ]
 
-
-drawAllPosts(posts)
+// Faccio partire al inizio della pagina i posts
+drawAllPosts(posts);
 
 //************************************************************************** */
 // FUNZIONI
@@ -94,7 +94,13 @@ function drawAllPosts (postsArray) {
 
                     <div>${textPost}</div>
 
-                    ${img === null ? '' : getImgPostsHTML(img)}
+                    ${img === null ? '' :  `
+                                            <div class="post__image">
+                                                <img src="${img}" alt="">
+                                            </div>
+
+                                            `
+                    }
 
                     <div class="post__footer">
                         <div class="likes js-likes">
@@ -105,7 +111,7 @@ function drawAllPosts (postsArray) {
                                     <span class="like-button__label">Mi Piace</span>
                                 </a>
                             </div>
-
+ 
                             <div class="likes__counter">
                                 Piace a <b id="like-counter-1" class="js-likes-counter">${like}</b> persone
                             </div>
@@ -115,7 +121,8 @@ function drawAllPosts (postsArray) {
                 </div>
             </div>
         `;
-    
+
+        // Concateno i posts
         postsContainer.innerHTML += postsTemplate;     
         
         
@@ -123,16 +130,49 @@ function drawAllPosts (postsArray) {
 
 }
 
-function getImgPostsHTML(postsImg) {
-    
-    `
-        <div class="post__image">
-            <img src="${postsImg.img}" alt="">
-        </div>
+//-----------------------------------------------------
+// EVENT LISTENERS
+//-----------------------------------------------
 
-    `;
-    return
+const allLikeBtn = document.querySelectorAll('.js-like-button ');
+const allLikeNumb = document.querySelectorAll('.js-likes-counter');
+// Scorro i bottoni dei mi piace con il ciclo for
+for(let i = 0; i < allLikeBtn.length; i++) {
+    const thisLikeBtn = allLikeBtn[i];
+    // Creo la funzione al click
+    thisLikeBtn.addEventListener('click', function (event) {
+        // Impedisco il comportamento di default dal browser
+        event.preventDefault();
+        // Incremento il like solo se il bottone non ha già la classe 'like-button--liked'
+        // E faccio diventare verde il bottone 
+        if (!this.classList.contains('like-button--liked')) {
+            // Aggiungo la classe 'like-button--liked' al btn cliccato
+            this.classList.add('like-button--liked');
+            // Mi prendo l'elemnto del html che ha il numero relativo al btn
+            const numLiketext = allLikeNumb[i];
+            // Trasformo numLiketext in numero 
+            let numLike = parseInt(numLiketext.innerHTML);
+            // Incremento di 1 il like
+            numLike++;
+            // Riporto il numero al numLiketext
+            numLiketext.innerHTML = numLike;
+            
+        }
+        
+    })
+
 }
+
+
+
+
+
+
+
+
+
+   
+    
 
 
 
