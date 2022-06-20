@@ -42,6 +42,7 @@ const posts = [
         photo: "https://unsplash.it/300/300?image=11",
         date: '12-21-2014',
         textPost: 'Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.',
+        img: null,
         like: 190,
 
     },
@@ -51,6 +52,7 @@ const posts = [
         photo: "https://unsplash.it/300/300?image=18",
         date: '12-31-2011' ,
         textPost: 'Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.',
+        img: null,
         like: 299,
 
     },
@@ -64,7 +66,7 @@ drawAllPosts(posts)
 //***************************************************************** */
 
 function drawAllPosts (postsArray) {
-    const postsContainer = document.querySelector('.post-list');
+    const postsContainer = document.querySelector('.posts-list');
 
     // Scorro gli elemnti con il ciclo for
     for(let i = 0; i < postsArray.length; i++) {
@@ -90,11 +92,9 @@ function drawAllPosts (postsArray) {
 
                     </div>
 
-                    <div>${textPost} </div>
+                    <div>${textPost}</div>
 
-                    <div class="post__image">
-                        <img src="${img}" alt="">
-                    </div>
+                    ${img === null ? '' : getImgPostsHTML(img)}
 
                     <div class="post__footer">
                         <div class="likes js-likes">
@@ -116,10 +116,26 @@ function drawAllPosts (postsArray) {
             </div>
         `;
     
-        postsContainer.innerHTML += postsTemplate;
+        postsContainer.innerHTML += postsTemplate;     
+        
         
     }
 
 }
+
+function getImgPostsHTML(postsImg) {
+    
+    `
+        <div class="post__image">
+            <img src="${postsImg.img}" alt="">
+        </div>
+
+    `;
+    return
+}
+
+
+
+
 
 
